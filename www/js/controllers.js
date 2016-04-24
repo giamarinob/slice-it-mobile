@@ -8,6 +8,14 @@ angular.module('starter.controllers', [])
 
 })
 
+.controller('oneRestCtrl', function($scope, Merchant) {
+  Merchant.get({id: 3}).$promise.then(function(response){
+    $scope.selectedMerchant = response;
+    console.log(response);
+  });
+
+})
+
   // With the new view caching in Ionic, Controllers are only called
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
 
