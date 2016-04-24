@@ -1,20 +1,28 @@
 angular.module('starter.controllers', [])
 
-.controller('restaurantsCtrl', function($scope, Merchant) {
+.controller('restaurantsCtrl', function($scope, Merchant, Seating) {
   Merchant.query().$promise.then(function(response){
     $scope.merchants = response;
-    console.log(response);
   });
+    $scope.selectMerchant = function(merchant) {
+      Seating.save({merchant_id: merchant.id})
 
+    };
 })
 
 .controller('oneRestCtrl', function($scope, Merchant) {
   Merchant.get({id: 3}).$promise.then(function(response){
     $scope.selectedMerchant = response;
-    console.log(response);
   });
-
 })
+
+// .controller('checkInCtrl', function($scope, Seating) {
+//   $scope.click = function() {
+//     var selected_seating = new Seating({merchant: })
+
+
+//   }
+// })
 
   // With the new view caching in Ionic, Controllers are only called
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
