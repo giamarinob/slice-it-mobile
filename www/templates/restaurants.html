@@ -1,22 +1,9 @@
 <ion-view title="Restaurants" id="page2">
     <ion-content padding="true" class="has-header">
         <ion-list>
-            <div class= "list card" ng-repeat="merchant in merchants">
-                <div class="item item-divider">{{merchant.business_name}}</div>
-            </div>
-        </ion-list>
-   <!--      <button id="restaurants-button5" class="button button-positive  button-block">Tap me!</button>
-        <ion-list>
-            <ion-item class="item-thumbnail-left">
-                <img>
-                <h2>Title</h2>
-                <p>Item</p>
+            <ion-item class= "list card" ng-repeat="merchant in merchants" ng-click="selectMerchant(merchant)">
+              {{merchant.business_name}}
             </ion-item>
         </ion-list>
-        <ion-list>
-            <ion-item>Item 1</ion-item>
-            <ion-item>Item 2</ion-item>
-            <ion-item>Item 3</ion-item>
-        </ion-list> -->
     </ion-content>
 </ion-view>
