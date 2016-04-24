@@ -6,8 +6,13 @@ angular.module('starter.controllers', [])
   });
     $scope.selectMerchant = function(merchant) {
       Seating.save({merchant_id: merchant.id})
-
     };
+})
+
+.controller('BillCtrl', function($scope, $stateParams, Bill) {
+  $scope.yo = Bill.query();
+  $scope.yo = $stateParams;
+
 })
 
 .controller('oneRestCtrl', function($scope, Merchant) {
