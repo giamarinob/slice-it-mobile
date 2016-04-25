@@ -21,6 +21,7 @@
 <ion-view name="login-view">
   <ion-content>
     <div class="list">
+      <form stripe-form="stripeCallback" name="checkoutForm">
       <label class="item item-input item-floating-label">
         <span class="input-label">First Name</span>
         <input type="text" placeholder="First Name" ng-model="data.first_name">
@@ -35,12 +36,28 @@
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">Password</span>
-        <input type="password" placeholder="password" ng-model="data.password">
+        <input type="password" placeholder="Password" ng-model="data.password">
       </label>
-    </div>
+
+
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Card Number</span>
+        <input ng-model="number" placeholder="Card Number" payments-format="card" payments-validate="card" name="card" />
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Expiration</span>
+        <input ng-model="expiry" placeholder="Expiration" payments-format="expiry" payments-validate="expiry" name="expiry" />
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Cvc</span>
+        <input ng-model="cvc" placeholder="CVC" payments-format="cvc" payments-validate="cvc" name="cvc" />
+      </label>
+      <button class="button button-block button-calm" ng-click="#">Register</button>
+  </form>
+</div>
 
     <div class="padding">
-      <button class="button button-block button-calm" ng-click="register()">Register</button>
+
     </div>
   </ion-content>
 </ion-view>
