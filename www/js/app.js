@@ -76,12 +76,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
-    .state('app.oneRest', {
-    url: '/a',
+    .state('app.Bills', {
+    url: '/bills',
     views: {
       'menuContent': {
-        templateUrl: 'templates/restaurant.html',
-        controller: 'oneRestCtrl'
+        templateUrl: 'templates/bills.html',
+        controller: 'BillCtrl'
       }
     }
   })
@@ -89,7 +89,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     url: '/bills/:id',
     views: {
       'menuContent': {
-        templateUrl: 'templates/restaurant.html',
+        templateUrl: 'templates/bill.html',
         controller: 'BillCtrl'
       }
     }

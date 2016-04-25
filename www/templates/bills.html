@@ -1,0 +1,10 @@
+<ion-view title="Bills">
+    <ion-content padding="true" class="has-header">
+        <ion-list>
+            <ion-item class= "list card" ng-repeat="bill in bills" ng-href="#/app/bills/{{bill.id}}">
+              <p>{{bill.merchant_name}}</p>
+              ${{bill.total/100}}
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>
