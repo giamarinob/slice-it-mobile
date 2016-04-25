@@ -9,9 +9,13 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('BillCtrl', function($scope, $stateParams, Bill) {
+.controller('BillCtrl', function($scope, $stateParams, Bill, PayUp) {
   $scope.yo = Bill.get($stateParams);
-  $scope.yol = $scope.yo
+  $scope.bills = Bill.query();
+  $scope.payup = function(billID){
+    PayUp.update({user_id: 1, bill_id: billID, amount: 5,id:1})
+    location.reload();
+  };
 })
 
 .controller('oneRestCtrl', function($scope, Merchant) {
@@ -83,4 +87,32 @@ angular.module('starter.controllers', [])
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
 .controller('loginCtrl', function($scope, $stateParams) {
+})
+.controller('PopupCtrl',function($scope, $ionicPopup, AddTransaction) {
+  $scope.showPopup = function(billID) {
+   $scope.data = {}
+
+   // An elaborate, custom popup
+   var myPopup = $ionicPopup.show({
+     template: '<input type="text" ng-model="data.username">',
+     title: "Enter Fucker's username",
+     scope: $scope,
+     buttons: [
+       { text: 'Cancel' },
+       {
+         text: '<b>Add user</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+           if (!$scope.data.username) {
+             e.preventDefault();
+           } else {
+             AddTransaction.save({username: $scope.data.username,bill_id: billID})
+             location.reload();
+           }
+         }
+       },
+     ]
+   });
+  };
 });
+
