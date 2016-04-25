@@ -11,9 +11,9 @@ angular.module('starter.controllers', [])
 
 .controller('BillCtrl', function($scope, $stateParams, Bill, PayUp) {
   $scope.bill = Bill.get($stateParams);
-  $scope.bills = Bill.query();
+  $scope.bills = Bill.query({user_id: window.localStorage['userID']});
   $scope.payup = function(billID){
-    PayUp.update({user_id: 1, bill_id: billID, amount: 5,id:1})
+    PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: 5,id:1})
     location.reload();
   };
 })
@@ -136,7 +136,7 @@ angular.module('starter.controllers', [])
            if (!$scope.data.email) {
              e.preventDefault();
            } else {
-             AddTransaction.save({username: $scope.data.email,bill_id: billID})
+             AddTransaction.save({email: $scope.data.email,bill_id: billID})
              location.reload();
            }
          }
