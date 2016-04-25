@@ -10,9 +10,8 @@ angular.module('starter.controllers', [])
 })
 
 .controller('BillCtrl', function($scope, $stateParams, Bill) {
-  $scope.yo = Bill.query();
-  $scope.yo = $stateParams;
-
+  $scope.yo = Bill.get($stateParams);
+  $scope.yol = $scope.yo
 })
 
 .controller('oneRestCtrl', function($scope, Merchant) {
