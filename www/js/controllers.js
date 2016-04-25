@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('BillCtrl', function($scope, $stateParams, Bill, PayUp) {
-  $scope.yo = Bill.get($stateParams);
+  $scope.bill = Bill.get($stateParams);
   $scope.bills = Bill.query();
   $scope.payup = function(billID){
     PayUp.update({user_id: 1, bill_id: billID, amount: 5,id:1})
@@ -124,8 +124,8 @@ angular.module('starter.controllers', [])
 
    // An elaborate, custom popup
    var myPopup = $ionicPopup.show({
-     template: '<input type="text" ng-model="data.username">',
-     title: "Enter Fucker's username",
+     template: '<input type="text" ng-model="data.email">',
+     title: "Enter your friend's email",
      scope: $scope,
      buttons: [
        { text: 'Cancel' },
@@ -133,10 +133,10 @@ angular.module('starter.controllers', [])
          text: '<b>Add user</b>',
          type: 'button-positive',
          onTap: function(e) {
-           if (!$scope.data.username) {
+           if (!$scope.data.email) {
              e.preventDefault();
            } else {
-             AddTransaction.save({username: $scope.data.username,bill_id: billID})
+             AddTransaction.save({username: $scope.data.email,bill_id: billID})
              location.reload();
            }
          }
