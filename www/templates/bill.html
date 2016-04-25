@@ -1,0 +1,20 @@
+<ion-view title="Bill">
+    <ion-content padding="true" class="has-header">
+        <h4><b>{{yo.merchant_name}}</b></h4>
+        <h5>Table number {{yo.seating_id}}</h5>
+        <ion-list>
+        <ion-item class= "list card" ng-repeat="item in yo.item_array" ng-click="selectMerchant(merchant)">
+              <h2>{{item.item_description}}</h2> ${{item.price}}
+        </ion-item>
+        </ion-list>
+        <h5><b>Total: ${{yo.total/100.0}}</b></h5>
+
+        <button class="button button-positive  button-block" ng-click="payup(yo.id)">Pay up fucker!</button>
+        <ion-list >
+            <ion-item class= "list card" ng-repeat="transaction in yo.transaction_array">
+                  <h2>{{transaction[0]}}</h2> ${{transaction[1]}}
+            </ion-item>
+        </ion-list>
+        <button class="button button-positive  button-block" ng-controller="PopupCtrl" ng-click="showPopup(yo.id)">Add another fucker</button>
+    </ion-content>
+</ion-view>
