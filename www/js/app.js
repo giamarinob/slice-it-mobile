@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngResource'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngResource', 'angularPayments'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -23,6 +23,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
 })
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  window.Stripe.setPublishableKey('pk_test_rRW8uzM1cWZDV2iYzpftAPEK');
   $httpProvider.defaults.withCredentials = true;
   $stateProvider
 
@@ -100,8 +101,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl'
   })
-  .state('newUser', {
-  url: '/new',
+  .state('register', {
+  url: '/register',
   templateUrl: 'templates/register.html',
   controller: 'newUserCtrl'
 })
