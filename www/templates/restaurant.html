@@ -1,22 +1,14 @@
-<ion-view title="Restaurants" id="page2">
+<ion-view title="Bill">
+
     <ion-content padding="true" class="has-header">
         <ion-list>
-            <div class= "list card">
-                {{yo}}
-            </div>
+        <ion-item class= "list card" ng-repeat="item in yo.item_array" ng-click="selectMerchant(merchant)">
+              <h2>{{item.item_description}}</h2> ${{item.price}}
+        </ion-item>
         </ion-list>
-   <!--      <button id="restaurants-button5" class="button button-positive  button-block">Tap me!</button>
-        <ion-list>
-            <ion-item class="item-thumbnail-left">
-                <img>
-                <h2>Title</h2>
-                <p>Item</p>
-            </ion-item>
-        </ion-list>
-        <ion-list>
-            <ion-item>Item 1</ion-item>
-            <ion-item>Item 2</ion-item>
-            <ion-item>Item 3</ion-item>
-        </ion-list> -->
+        <h4><b>Total: {{yo.total}} cents</b></h4>
+
+        <button class="button button-positive  button-block">Pay up fucker!</button>
+        <button class="button button-positive  button-block">Add another fucker</button>
     </ion-content>
 </ion-view>
