@@ -12,6 +12,16 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/bills/:id.json")
 })
 
+
+.factory('UserSession', function($resource){
+  return $resource("http://localhost:3000/customers/sign_in.json");
+})
+
+.factory('User', function($resource){
+  return $resource("http://localhost:3000/customers.json");
+})
+
+
 .factory('AddTransaction', function($resource){
   return $resource("http://localhost:3000/bills/:bill_id/transactions",{id: "@id", username: "@username", bill_id: "@bill_id"})
 })
@@ -19,6 +29,7 @@ angular.module('starter.services', [])
 .factory('PayUp', function($resource){
   return $resource("http://localhost:3000/bills/:bill_id/transactions/:id",{id: "@id", username: "@username", bill_id: "@bill_id", amount: "@amount"},{ update: {method: 'PUT'}})
 })
+
 
 
 .service('BlankService', [function(){

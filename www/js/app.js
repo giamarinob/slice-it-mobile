@@ -22,7 +22,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   });
 })
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  $httpProvider.defaults.withCredentials = true;
   $stateProvider
 
     .state('app', {
@@ -99,9 +100,13 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     templateUrl: 'templates/login.html',
     controller: 'loginCtrl'
   })
-
+  .state('newUser', {
+  url: '/new',
+  templateUrl: 'templates/register.html',
+  controller: 'newUserCtrl'
+})
 
   ;
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/restaurants');
+  $urlRouterProvider.otherwise('/login');
 });
