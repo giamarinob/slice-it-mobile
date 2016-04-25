@@ -82,5 +82,33 @@ angular.module('starter.controllers', [])
 
 .controller('PlaylistCtrl', function($scope, $stateParams) {
 })
-.controller('loginCtrl', function($scope, $stateParams) {
+
+.controller('loginCtrl', function($scope, $stateParams, UserSession, $location, $ionicPopup, $rootScope) {
+  $scope.data = {};
+
+  $scope.login = function(){
+    var user_session = new UserSession({customer: $scope.data});
+    user_session.$save(
+      function(data){
+        console.log(data);
+        window.localStorage['userID'] = data.id;
+        window.localStorage['first_name'] = data.first_name;
+        window.localStorage['last_name'] = data.last_name;
+        window.localStorage['userName'] = data.username;
+        window.localStorage['userEmail'] = data.email;
+        $location.path('/app/restaurants');
+      },
+      function(err){
+        var error = err["data"]["error"] || err.data.join('. ')
+        var confirmPopup = $ionicPopup.alert({
+          title: 'An error occured',
+          template: error
+        });
+      }
+    );
+  }
+.controller('newUserCtrl', function($scope, User) {
+    // Complete register controller 
+    // var new_user = new User({customer: $scope.data });
+  });
 });
