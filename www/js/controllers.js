@@ -2,6 +2,7 @@ angular.module('starter.controllers', [])
 
 .controller('restaurantsCtrl', function($scope, Merchant, Seating) {
   Merchant.query().$promise.then(function(response){
+    console.log(response);
     $scope.merchants = response;
   });
     $scope.selectMerchant = function(merchant) {
@@ -99,7 +100,7 @@ angular.module('starter.controllers', [])
         window.localStorage['userID'] = data.id;
         window.localStorage['first_name'] = data.first_name;
         window.localStorage['last_name'] = data.last_name;
-        window.localStorage['userName'] = data.username;
+        // window.localStorage['userName'] = data.username;
         window.localStorage['userEmail'] = data.email;
         $location.path('/app/restaurants');
       },
@@ -113,10 +114,37 @@ angular.module('starter.controllers', [])
     );
   };
 })
-.controller('newUserCtrl', function($scope, User) {
-    // Complete register controller
-    // var new_user = new User({customer: $scope.data });
-  })
+
+.controller('newUserCtrl', function($scope, User, $location, $ionicPopup) {
+  $scope.stripeCallback = function(status, response){
+    if (response.error) {
+      console.log("I errored");
+    } else {
+      console.log(response);
+      var new_user = new User({customer: this.data});
+      console.log(this.data)
+      new_user.$save( function(data){
+                      console.log(data);
+                      window.localStorage['userID'] = data.id;
+                      window.localStorage['first_name'] = data.first_name;
+                      window.localStorage['last_name'] = data.last_name;
+                      // window.localStorage['userName'] = data.username;
+                      window.localStorage['userEmail'] = data.email;
+                      $location.path('/app/restaurants');
+
+                    },function(err){
+                      console.log("My error is" + err);
+                      var error = err["data"]["error"] || err.data.join('. ');
+                      var confirmPopup = $ionicPopup.alert({
+                      title: 'An error occured',
+                      template: error
+                      });
+                    }
+                  );
+    } // end of if else
+  };
+
+}) // End of NewUser Controller
 
 .controller('PopupCtrl',function($scope, $ionicPopup, AddTransaction) {
   $scope.showPopup = function(billID) {
