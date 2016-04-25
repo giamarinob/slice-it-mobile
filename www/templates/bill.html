@@ -3,9 +3,11 @@
         <h4><b>{{bill.merchant_name}}</b></h4>
         <h5>Table number {{bill.seating_id}}</h5>
         <ion-list>
-        <ion-item class= "list card" ng-repeat="item in bill.item_array" ng-click="selectMerchant(merchant)">
-              <h2>{{item.item_description}}</h2> ${{item.price}}
+        <ul class="list" ng-controller="PopupCtrl">
+        <ion-item class= "list card" ng-repeat="item in bill.item_array">
+              <list class="item" on-swipe="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} ${{item.price}} {{item.assigned_to}}</li>
         </ion-item>
+        </ul>
         </ion-list>
         <h5><b>Total: ${{bill.total/100.0}}</b></h5>
 

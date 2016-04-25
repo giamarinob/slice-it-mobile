@@ -9,12 +9,13 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('BillCtrl', function($scope, $stateParams, Bill, PayUp) {
+.controller('BillCtrl', function($scope, $stateParams, Bill, PayUp, AssignItem) {
   $scope.bill = Bill.get($stateParams);
   $scope.bills = Bill.query({user_id: window.localStorage['userID']});
   $scope.payup = function(billID){
     PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: 5,id:1})
     location.reload();
+  $scope.assign = function(orderID, transactionID){alert(orderID,transactionID)}
   };
 })
 
@@ -118,7 +119,7 @@ angular.module('starter.controllers', [])
     // var new_user = new User({customer: $scope.data });
   })
 
-.controller('PopupCtrl',function($scope, $ionicPopup, AddTransaction) {
+.controller('PopupCtrl',function($scope, $ionicPopup, AddTransaction, AssignItem) {
   $scope.showPopup = function(billID) {
    $scope.data = {}
 
@@ -137,6 +138,33 @@ angular.module('starter.controllers', [])
              e.preventDefault();
            } else {
              AddTransaction.save({email: $scope.data.email,bill_id: billID})
+             location.reload();
+           }
+         }
+       },
+     ]
+   });
+  };
+
+  $scope.transactionsPopup = function(orderID,item_description,transaction_Array) {
+   $scope.data = {transactions: transaction_Array}
+
+   // An elaborate, custom popup
+   var myPopup = $ionicPopup.show({
+     template: '<ion-radio ng-repeat="transaction in data.transactions" ng-model="data.choice" ng-value="transaction[2]">{{transaction[0]}}</ion-radio>',
+     title: "Assign "+item_description,
+     scope: $scope,
+     buttons: [
+       { text: 'Cancel' },
+       {
+         text: '<b>Assign</b>',
+         type: 'button-positive',
+         onTap: function(e) {
+           if (!$scope.data.choice) {
+             e.preventDefault();
+           } else {
+            console.log($scope.data.choice)
+             AssignItem.update({transaction_id: $scope.data.choice, id: orderID})
              location.reload();
            }
          }
