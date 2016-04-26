@@ -9,8 +9,11 @@ angular.module('starter.controllers', [])
     $scope.hello = function(merchant){return merchant.checked_in.includes($scope.id)}
     $scope.selectMerchant = function(merchant) {
       Seating.save({merchant_id: merchant.id, customer_id: window.localStorage['userID']});
-      location.reload()
-    };
+    }
+    $scope.doRefresh = function() {
+      $scope.merchants = Merchant.query()
+      $scope.$broadcast('scroll.refreshComplete')
+    }
 })
 
 .controller('BillCtrl', function($scope, $stateParams, Bill, PayUp, AssignItem, $http) {
@@ -158,29 +161,26 @@ angular.module('starter.controllers', [])
 
 .controller('PopupCtrl',function($scope, $ionicPopup, AddTransaction, AssignItem) {
   $scope.showPopup = function(billID) {
-   $scope.data = {}
+    $scope.data = {}
 
    // An elaborate, custom popup
-   var myPopup = $ionicPopup.show({
-     template: '<input type="text" ng-model="data.email">',
-     title: "Enter your friend's email",
-     scope: $scope,
-     buttons: [
-       { text: 'Cancel' },
-       {
-         text: '<b>Add user</b>',
-         type: 'button-positive',
-         onTap: function(e) {
-           if (!$scope.data.email) {
-             alert("EMAIL NO WORKY")
-           } else {
-             AddTransaction.save({email: $scope.data.email,bill_id: billID})
-             // location.reload();
-           }
-         }
-       },
-     ]
-   });
+  var myPopup = $ionicPopup.show({
+    template: '<input type="text" ng-model="data.email">',
+    title: "Enter your friend's email",
+    scope: $scope,
+    buttons: [
+      { text: 'Cancel' },
+      {
+        text: '<b>Add user</b>',
+        type: 'button-positive',
+        onTap: function(e) {
+          AddTransaction.save({email: $scope.data.email,bill_id: billID}).$promise.then(function(response){
+            console.log(response)
+          })
+        }
+      },
+      ]
+    });
   };
 
   $scope.transactionsPopup = function(orderID,item_description,transaction_Array) {
@@ -198,7 +198,7 @@ angular.module('starter.controllers', [])
          type: 'button-positive',
          onTap: function(e) {
            if (!$scope.data.choice) {
-             e.preventDefault();
+             guestPopup();
            } else {
             console.log($scope.data.choice)
              AssignItem.update({transaction_id: $scope.data.choice, id: orderID})
@@ -209,5 +209,25 @@ angular.module('starter.controllers', [])
      ]
    });
   };
+
+  $scope.guestPopup = function(){
+    $scope.data = {}
+
+    var newGuestPopup = $ionicPopup.show({
+      template: '<div class="list"><label class="item item-input item-stacked-label"><span class="input-label">Guest Name</span><input type="text" name="username" placeholder="Guest Name"></label><label class="item item-input item-stacked-label"><span class="input-label">Last Name</span><input type="email" name="email" placeholder="guest@example.com"></label></div>',
+      title: "Create a new Guest User?",
+      scope: $scope,
+      buttons: [
+        { text: 'I do not want',
+          type: 'button-assertive' },
+        { text: '<b>Create Guest</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            console.log($scope.data)
+          }
+        }
+      ]
+    })
+  }
 
 });
