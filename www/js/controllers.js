@@ -5,8 +5,11 @@ angular.module('starter.controllers', [])
     console.log(response);
     $scope.merchants = response;
   });
+    $scope.id = parseInt(window.localStorage['userID'])
+    $scope.hello = function(merchant){return merchant.checked_in.includes($scope.id)}
     $scope.selectMerchant = function(merchant) {
-      Seating.save({merchant_id: merchant.id})
+      Seating.save({merchant_id: merchant.id, customer_id: window.localStorage['userID']});
+      location.reload()
     };
 })
 
