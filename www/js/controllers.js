@@ -20,8 +20,18 @@ angular.module('starter.controllers', [])
   $scope.payup = function(billID){
     PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: 5,id:1})
     location.reload();
-  $scope.assign = function(orderID, transactionID){alert(orderID,transactionID)}
+    $scope.assign = function(orderID, transactionID){alert(orderID,transactionID)}
   };
+  $scope.deleteTrans = function(billId, transId){
+    PayUp.delete({bill_id: billId, id:transId})
+    location.reload();
+  }
+})
+
+.controller('ListCtrl', function($scope){
+  $scope.shouldShowDelete = false;
+  $scope.shouldShowReorder = false;
+  $scope.listCanSwipe = true;
 })
 
 .controller('oneRestCtrl', function($scope, Merchant) {
@@ -79,21 +89,6 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
-
-
 .controller('loginCtrl', function($scope, $stateParams, UserSession, $location, $ionicPopup, $rootScope) {
   $scope.data = {};
 
@@ -124,21 +119,12 @@ angular.module('starter.controllers', [])
   $scope.stripeCallback = function(status, response){
     if (response.error) {
       console.log("I errored");
+      // still need bad card error handling
     } else {
-      // Send token with email back to server here
+      // Create new user resource instance and pass through a post request token and create user details
       console.log(response);
-      var email = this.data.email;
-      var token = response.id;
-      var params = {stripeEmail: email, stripeToken: token}
-      $http({
-        data: params,
-        method: 'POST',
-        url: 'http://localhost:3000/charges.json'
-        }).then(function successCallback(response) {
-          console.log(response)
-        }, function errorCallback(response) {
-          console.log(response)
-        });
+
+      this.data.stripe_customer_id = {email: this.data.email, token: response.id}
 
       var new_user = new User({customer: this.data});
       console.log(this.data)
@@ -152,6 +138,7 @@ angular.module('starter.controllers', [])
                       $location.path('/app/restaurants');
 
                     },function(err){
+                      // fix this ***
                       console.log("My error is" + err);
                       var error = err["data"]["error"] || err.data.join('. ');
                       var confirmPopup = $ionicPopup.alert({
