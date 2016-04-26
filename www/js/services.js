@@ -30,7 +30,9 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/bills/:bill_id/transactions/:id",{id: "@id", username: "@username", bill_id: "@bill_id", amount: "@amount"},{ update: {method: 'PUT'}})
 })
 
-
+.factory('AssignItem', function($resource){
+  return $resource("http://localhost:3000/orders/:id",{id: "@id", transaction_id: "@transaction_id", user_id: "@user_id"},{ update: {method: 'PUT'}})
+})
 
 .service('BlankService', [function(){
 
