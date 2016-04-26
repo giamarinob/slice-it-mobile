@@ -121,21 +121,12 @@ angular.module('starter.controllers', [])
   $scope.stripeCallback = function(status, response){
     if (response.error) {
       console.log("I errored");
+      // still need bad card error handling
     } else {
-      // Send token with email back to server here
+      // Create new user resource instance and pass through a post request token and create user details
       console.log(response);
-      var email = this.data.email;
-      var token = response.id;
-      var params = {stripeEmail: email, stripeToken: token}
-      $http({
-        data: params,
-        method: 'POST',
-        url: 'http://localhost:3000/charges.json'
-        }).then(function successCallback(response) {
-          console.log(response)
-        }, function errorCallback(response) {
-          console.log(response)
-        });
+
+      this.data.stripe_customer_id = {email: this.data.email, token: response.id}
 
       var new_user = new User({customer: this.data});
       console.log(this.data)
@@ -149,6 +140,7 @@ angular.module('starter.controllers', [])
                       $location.path('/app/restaurants');
 
                     },function(err){
+                      // fix this ***
                       console.log("My error is" + err);
                       var error = err["data"]["error"] || err.data.join('. ');
                       var confirmPopup = $ionicPopup.alert({
