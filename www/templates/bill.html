@@ -5,16 +5,22 @@
         <ion-list>
         <ul class="list" ng-controller="PopupCtrl">
         <ion-item class= "list card" ng-repeat="item in bill.item_array">
-              <list class="item" on-swipe="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} ${{item.price}} {{item.assigned_to}}</li>
+              <list class="item" on-swipe="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} {{item.price*(1+data.tip/100) | currency}} {{item.assigned_to}}</li>
         </ion-item>
         </ul>
         </ion-list>
-        <h5><b>Total: ${{bill.total/100.0}}</b></h5>
+        <div class="item range">
+            <i>$</i>
+            <input type="range" name="tip" min="0" max="50" value="data.tip" ng-model = "data.tip">
+            <i>$$$</i>
+        </div>
+        <div></div>
+        <h5><b>Total: {{((bill.total/100)*(1+data.tip/100))  | currency}} Tip: {{data.tip}}%</b></h5>
 
         <button class="button button-positive  button-block" ng-click="payup(bill.id)">Settle Your Bill</button>
         <ion-list >
             <ion-item class= "list card" ng-repeat="transaction in bill.transaction_array">
-                  <h2>{{transaction[0]}}</h2> ${{transaction[1]}}
+                  <h2>{{transaction[0]}}</h2> Total Paid: {{transaction[1]  | currency}} Total Owed: {{transaction[3]*(1+data.tip/100) | currency}}
             </ion-item>
         </ion-list>
         <button class="button button-positive  button-block" ng-controller="PopupCtrl" ng-click="showPopup(bill.id)">Add another friend to the bill</button>

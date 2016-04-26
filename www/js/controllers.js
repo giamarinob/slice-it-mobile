@@ -11,6 +11,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('BillCtrl', function($scope, $stateParams, Bill, PayUp, AssignItem) {
+  $scope.data = {tip: 18}
   $scope.bill = Bill.get($stateParams);
   $scope.bills = Bill.query({user_id: window.localStorage['userID']});
   $scope.payup = function(billID){
