@@ -159,6 +159,11 @@ angular.module('starter.controllers', [])
 
 }) // End of NewUser Controller
 
+.controller('logOutCtrl', function($scope, $location){
+  window.localStorage.clear();
+  location.reload();
+  $location.path('/login');
+})
 .controller('PopupCtrl',function($scope, $ionicPopup, AddTransaction, AssignItem) {
   $scope.showPopup = function(billID) {
     $scope.data = {}

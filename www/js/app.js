@@ -87,6 +87,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
   templateUrl: 'templates/register.html',
   controller: 'newUserCtrl'
 })
+  .state('app.logout', {
+  url: '/logout',
+  views: {
+    'menuContent': {
+    controller: 'logOutCtrl'
+    }
+  }
+})
 
   ;
   // if none of the above states are matched, use this as the fallback
