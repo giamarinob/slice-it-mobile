@@ -10,7 +10,7 @@ angular.module('starter.controllers', [])
     };
 })
 
-.controller('BillCtrl', function($scope, $stateParams, Bill, PayUp, AssignItem) {
+.controller('BillCtrl', function($scope, $stateParams, Bill, PayUp, AssignItem, $http) {
   $scope.data = {tip: 18}
   $scope.bill = Bill.get($stateParams);
   $scope.bills = Bill.query({user_id: window.localStorage['userID']});
@@ -22,6 +22,10 @@ angular.module('starter.controllers', [])
   $scope.deleteTrans = function(billId, transId){
     PayUp.delete({bill_id: billId, id:transId})
     location.reload();
+  }
+  $scope.doRefresh = function(billId) {
+    $scope.bill = Bill.get($stateParams)
+    $scope.$broadcast('scroll.refreshComplete')
   }
 })
 
@@ -165,10 +169,10 @@ angular.module('starter.controllers', [])
          type: 'button-positive',
          onTap: function(e) {
            if (!$scope.data.email) {
-             e.preventDefault();
+             alert("EMAIL NO WORKY")
            } else {
              AddTransaction.save({email: $scope.data.email,bill_id: billID})
-             location.reload();
+             // location.reload();
            }
          }
        },

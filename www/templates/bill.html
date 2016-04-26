@@ -1,5 +1,9 @@
 <ion-view title="Bill">
-    <ion-content padding="true" class="has-header">
+    <ion-content padding="true" ng-controller="BillCtrl" class="has-header">
+        <ion-refresher
+            pulling-text="Pull to Refresh your Bill"
+            on-refresh="doRefresh(bill.id)">
+        </ion-refresher>
         <h4><b>{{bill.merchant_name}}</b></h4>
         <h5>Table number {{bill.seating_id}}</h5>
         <ion-list ng-controller="PopupCtrl">
