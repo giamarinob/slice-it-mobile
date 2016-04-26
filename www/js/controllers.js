@@ -17,8 +17,18 @@ angular.module('starter.controllers', [])
   $scope.payup = function(billID){
     PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: 5,id:1})
     location.reload();
-  $scope.assign = function(orderID, transactionID){alert(orderID,transactionID)}
+    $scope.assign = function(orderID, transactionID){alert(orderID,transactionID)}
   };
+  $scope.deleteTrans = function(billId, transId){
+    PayUp.delete({bill_id: billId, id:transId})
+    location.reload();
+  }
+})
+
+.controller('ListCtrl', function($scope){
+  $scope.shouldShowDelete = false;
+  $scope.shouldShowReorder = false;
+  $scope.listCanSwipe = true;
 })
 
 .controller('oneRestCtrl', function($scope, Merchant) {
@@ -75,21 +85,6 @@ angular.module('starter.controllers', [])
     }, 1000);
   };
 })
-
-.controller('PlaylistsCtrl', function($scope) {
-  $scope.playlists = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
-})
-
-.controller('PlaylistCtrl', function($scope, $stateParams) {
-})
-
 
 .controller('loginCtrl', function($scope, $stateParams, UserSession, $location, $ionicPopup, $rootScope) {
   $scope.data = {};
