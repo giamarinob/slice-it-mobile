@@ -115,12 +115,26 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('newUserCtrl', function($scope, User, $location, $ionicPopup) {
+.controller('newUserCtrl', function($scope, User, $location, $ionicPopup, $http) {
   $scope.stripeCallback = function(status, response){
     if (response.error) {
       console.log("I errored");
     } else {
+      // Send token with email back to server here
       console.log(response);
+      var email = this.data.email;
+      var token = response.id;
+      var params = {stripeEmail: email, stripeToken: token}
+      $http({
+        data: params,
+        method: 'POST',
+        url: 'http://localhost:3000/charges.json'
+        }).then(function successCallback(response) {
+          console.log(response)
+        }, function errorCallback(response) {
+          console.log(response)
+        });
+
       var new_user = new User({customer: this.data});
       console.log(this.data)
       new_user.$save( function(data){

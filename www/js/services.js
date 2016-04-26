@@ -20,7 +20,9 @@ angular.module('starter.services', [])
 .factory('User', function($resource){
   return $resource("http://localhost:3000/customers.json");
 })
-
+.factory('Charge', function($resource){
+  return $resource("http://localhost:3000/charges.json");
+})
 
 .factory('AddTransaction', function($resource){
   return $resource("http://localhost:3000/bills/:bill_id/transactions",{id: "@id", username: "@username", bill_id: "@bill_id"})
