@@ -2,12 +2,10 @@
     <ion-content padding="true" class="has-header">
         <h4><b>{{bill.merchant_name}}</b></h4>
         <h5>Table number {{bill.seating_id}}</h5>
-        <ion-list>
-        <ul class="list" ng-controller="PopupCtrl">
-        <ion-item class= "list card" ng-repeat="item in bill.item_array">
-              <list class="item" on-swipe="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} {{item.price*(1+data.tip/100) | currency}} {{item.assigned_to}}</li>
-        </ion-item>
-        </ul>
+        <ion-list ng-controller="PopupCtrl">
+            <ion-item class= "list card" ng-repeat="item in bill.item_array">
+              <li class="item" on-tap="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} {{item.price*(1+data.tip/100) | currency}} {{item.assigned_to}}</li>
+            </ion-item>
         </ion-list>
         <div class="item range">
             <i>$</i>
@@ -18,9 +16,11 @@
         <h5><b>Total: {{((bill.total/100)*(1+data.tip/100))  | currency}} Tip: {{data.tip}}%</b></h5>
 
         <button class="button button-positive  button-block" ng-click="payup(bill.id)">Settle Your Bill</button>
-        <ion-list >
-            <ion-item class= "list card" ng-repeat="transaction in bill.transaction_array">
-                  <h2>{{transaction[0]}}</h2> Total Paid: {{transaction[1]  | currency}} Total Owed: {{transaction[3]*(1+data.tip/100) | currency}}
+        <ion-list ng-controller="ListCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+            <ion-item ng-repeat="transaction in bill.transaction_array">
+                <h2>{{transaction[0]}}</h2> Total Paid: {{transaction[1]  | currency}} Total Owed: {{transaction[3]*(1+data.tip/100) | currency}}
+                <ion-option-button class="button-positive" ng-click="edit(transaction)">Edit</ion-option-button>
+                <ion-option-button class="button-assertive" ng-click="deleteTrans(bill.id, transaction[2])">Delete</ion-option-button>
             </ion-item>
         </ion-list>
         <button class="button button-positive  button-block" ng-controller="PopupCtrl" ng-click="showPopup(bill.id)">Add another friend to the bill</button>
