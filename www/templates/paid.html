@@ -1,0 +1,18 @@
+<ion-view title="Paid">
+    <ion-content padding="true" class="has-header">
+        <ion-refresher
+            pulling-text="Pull to Refresh your Bill"
+            on-refresh="doRefresh(bill.id)">
+        </ion-refresher>
+        <h4><b></b></h4>
+        <ion-list ng-controller="PopupCtrl" ng-controller="ListCtrl">
+            <ion-item class= "list card" ng-repeat="item in transaction.items_array">
+             {{item.item_description}} {{parseFloat(item.price)*(1+parseFloat(transaction.amount)/parseFloat(transaction.total)) | currency}} ({{parseInt(parseFloat(transaction.amount)/parseFloat(transaction.total)*100-100) }}% tip)<ion-option-button class="button-balanced" ng-click="deleteTrans(bill.id, transaction[2])">Text to Friend</ion-option-button>
+
+            </ion-item>
+        </ion-list>
+
+        <h2><b>Total: {{(parseFloat(transaction.amount)/100) | currency}} Tip: ({{parseInt(parseFloat(transaction.amount)/parseFloat(transaction.total)*100-100) }}% tip)</b></h2>
+
+    </ion-content>
+</ion-view>

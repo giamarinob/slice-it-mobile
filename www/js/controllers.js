@@ -16,8 +16,18 @@ angular.module('starter.controllers', [])
       $scope.$broadcast('scroll.refreshComplete')
     }
 })
+.controller('paidCtrl', function($scope, $stateParams,Transaction) {
+    console.log($stateParams)
+    $scope.transaction = Transaction.get($stateParams)
+    $scope.parseFloat = parseFloat
+    $scope.parseInt = parseInt
+    console.log($scope.transaction)
+    $scope.doRefresh = function() {
+    $scope.$broadcast('scroll.refreshComplete')
+  }
+})
 
-.controller('BillCtrl', function($scope, $stateParams, Bill, PayUp, AssignItem, $http) {
+.controller('BillCtrl', function($scope,$location, $stateParams, $ionicPopup, Bill, PayUp, AssignItem, $http) {
   $scope.data = {tip: 18}
   if (Object.keys($stateParams).length != 0 && JSON.stringify($stateParams) != JSON.stringify({})) {
    $scope.bill = Bill.get($stateParams);
@@ -37,6 +47,27 @@ angular.module('starter.controllers', [])
     $scope.bill = Bill.get($stateParams)
     $scope.$broadcast('scroll.refreshComplete')
   }
+  $scope.chargePopup = function(billID, amount,transactionID) {
+     $scope.data.amount=amount
+
+     // An elaborate, custom popup
+     var myPopup = $ionicPopup.show({
+       template: '<div>{{((data.amount)*(1+data.tip/100))  | currency}} Tip: {{data.tip}}%</div>',
+       title: "Confirm Charge",
+       scope: $scope,
+       buttons: [
+         { text: 'Cancel' },
+         {
+           text: 'Confirm Charge',
+           type: 'button-positive',
+           onTap: function(e) {
+               PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: parseInt((1+$scope.data.tip/100)*amount*100), id:1});
+               $location.path('app/paid/'+transactionID);
+           }
+         },
+       ]
+     });
+    };
 })
 
 .controller('ListCtrl', function($scope){
@@ -183,27 +214,6 @@ angular.module('starter.controllers', [])
 })
 
 .controller('PopupCtrl',function($scope, $ionicPopup, $filter, AddTransaction, PayUp,AssignItem) {
-
-   $scope.chargePopup = function(billID, amount) {
-   $scope.data = {}
-
-   // An elaborate, custom popup
-   var myPopup = $ionicPopup.show({
-     title: "Confirm Charge of "+$filter('currency')(amount,"$",2),
-     scope: $scope,
-     buttons: [
-       { text: 'Cancel' },
-       {
-         text: 'Confirm Charge',
-         type: 'button-positive',
-         onTap: function(e) {
-             PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: amount, id:1})
-             location.reload();
-         }
-       },
-     ]
-   });
-  };
 
   $scope.showPopup = function(billID) {
     $scope.data = {}
