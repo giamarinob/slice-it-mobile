@@ -19,11 +19,12 @@ angular.module('starter.controllers', [])
 
 .controller('BillCtrl', function($scope, $stateParams, Bill, PayUp, AssignItem, $http) {
   $scope.data = {tip: 18}
-  $scope.bill = Bill.get($stateParams);
+  if (Object.keys($stateParams).length != 0 && JSON.stringify($stateParams) != JSON.stringify({})) {
+   $scope.bill = Bill.get($stateParams);
+  }
   $scope.currentUserID = window.localStorage['userID']
   $scope.bills = Bill.query({user_id: window.localStorage['userID']});
   $scope.payup = function(billID,amount){
-    console.log(amount)
     PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: amount,id:1})
     location.reload();
     $scope.assign = function(orderID, transactionID){alert(orderID,transactionID)}
@@ -45,14 +46,16 @@ angular.module('starter.controllers', [])
 })
 
 .controller("guestList", function($scope) {
-  var guestArray = JSON.parse(window.localStorage["guestArray"]);
-  $scope.guestArray = guestArray;
-  $scope.deleteGuest = function(guest){
-    var filteredArray = guestArray.filter(function (arrGuest) {
-      return arrGuest.username != guest.username
-    });
-    window.localStorage["guestArray"] = JSON.stringify(filteredArray);
-  };
+  if (window.localStorage["guestArray"]) {
+    var guestArray = JSON.parse(window.localStorage["guestArray"]);
+    $scope.guestArray = guestArray;
+    $scope.deleteGuest = function(guest){
+      var filteredArray = guestArray.filter(function (arrGuest) {
+        return arrGuest.username != guest.username
+      });
+      window.localStorage["guestArray"] = JSON.stringify(filteredArray);
+    };
+  }
 
 })
 
@@ -247,6 +250,7 @@ angular.module('starter.controllers', [])
                       holder.push(newGuest);
                       window.localStorage["guestArray"] = JSON.stringify(holder)
                     }
+                    location.reload();
                   }
                 }
               ]

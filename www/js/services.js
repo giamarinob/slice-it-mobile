@@ -12,7 +12,6 @@ angular.module('starter.services', [])
   return $resource("http://localhost:3000/bills/:id.json")
 })
 
-
 .factory('UserSession', function($resource){
   return $resource("http://localhost:3000/customers/sign_in.json");
 })
