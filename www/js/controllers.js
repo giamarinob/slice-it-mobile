@@ -1,3 +1,4 @@
+
 angular.module('starter.controllers', [])
 
 .controller('restaurantsCtrl', function($scope, Merchant, Seating) {
@@ -39,6 +40,18 @@ angular.module('starter.controllers', [])
   $scope.shouldShowDelete = false;
   $scope.shouldShowReorder = false;
   $scope.listCanSwipe = true;
+})
+
+.controller("guestList", function($scope) {
+  var guestArray = JSON.parse(window.localStorage["guestArray"]);
+  $scope.guestArray = guestArray;
+  $scope.deleteGuest = function(guest){
+    var filteredArray = guestArray.filter(function (arrGuest) {
+      return arrGuest.username != guest.username
+    });
+    window.localStorage["guestArray"] = JSON.stringify(filteredArray);
+  };
+
 })
 
 .controller('oneRestCtrl', function($scope, Merchant) {
@@ -136,54 +149,86 @@ angular.module('starter.controllers', [])
       var new_user = new User({customer: this.data});
       console.log(this.data)
       new_user.$save( function(data){
-                      console.log(data);
-                      window.localStorage['userID'] = data.id;
-                      window.localStorage['first_name'] = data.first_name;
-                      window.localStorage['last_name'] = data.last_name;
-                      // window.localStorage['userName'] = data.username;
-                      window.localStorage['userEmail'] = data.email;
-                      $location.path('/app/restaurants');
+        console.log(data);
+        window.localStorage['userID'] = data.id;
+        window.localStorage['first_name'] = data.first_name;
+        window.localStorage['last_name'] = data.last_name;
+        // window.localStorage['userName'] = data.username;
+        window.localStorage['userEmail'] = data.email;
+        $location.path('/app/restaurants');
 
-                    },function(err){
-                      // fix this ***
-                      console.log("My error is" + err);
-                      var error = err["data"]["error"] || err.data.join('. ');
-                      var confirmPopup = $ionicPopup.alert({
-                      title: 'An error occured',
-                      template: error
-                      });
-                    }
-                  );
-    } // end of if else
+      },function(err){
+        // fix this ***
+        console.log("My error is" + err);
+        var error = err["data"]["error"] || err.data.join('. ');
+        var confirmPopup = $ionicPopup.alert({
+        title: 'An error occured',
+        template: error
+        });
+      }
+    );
+    }
   };
-
-}) // End of NewUser Controller
+})
 
 .controller('logOutCtrl', function($scope, $location){
   window.localStorage.clear();
   location.reload();
   $location.path('/login');
 })
+
 .controller('PopupCtrl',function($scope, $ionicPopup, AddTransaction, AssignItem) {
   $scope.showPopup = function(billID) {
     $scope.data = {}
 
    // An elaborate, custom popup
-  var myPopup = $ionicPopup.show({
-    template: '<input type="text" ng-model="data.email">',
-    title: "Enter your friend's email",
-    scope: $scope,
-    buttons: [
-      { text: 'Cancel' },
-      {
-        text: '<b>Add user</b>',
-        type: 'button-positive',
-        onTap: function(e) {
-          AddTransaction.save({email: $scope.data.email,bill_id: billID}).$promise.then(function(response){
-            console.log(response)
-          })
+    var myPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="data.email">',
+      title: "Enter your friend's email",
+      cssClass: "popup-vertical-buttons",
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel',
+          type: 'button-full' },
+        {
+          text: '<b>Add user</b>',
+          type: 'button-full button-positive',
+          onTap: function(e) {
+            AddTransaction.save({email: $scope.data.email,bill_id: billID})
+          }
+        },
+        { text: 'Add Guest',
+          type: 'button-full button-balanced',
+          onTap: function(e) {
+            $scope.guestData = {}
+            var newGuestPopup = $ionicPopup.show({
+              template: '<div class="list"><label class="item item-input item-stacked-label"><span class="input-label">Guest Name</span><input type="text" name="username" placeholder="Guest Name" ng-model="guestData.name"></label><label class="item item-input item-stacked-label"><span class="input-label">Email</span><input type="email" name="email" placeholder="guest@example.com" ng-model="guestData.email"></label></div>',
+              title: "Create a new Guest User?",
+              scope: $scope,
+              buttons: [
+                { text: 'I do not want',
+                  type: 'button-assertive' },
+                { text: '<b>Create Guest</b>',
+                  type: 'button-positive',
+                  onTap: function(e) {
+                    var newGuest = new Guest($scope.guestData.name, $scope.guestData.email, billID);
+                    newGuest.findPrimaryId();
+                    var holder = []
+                    if (window.localStorage["guestArray"]) {
+                      holder = JSON.parse(window.localStorage["guestArray"]);
+                      holder.push(newGuest);
+                      window.localStorage["guestArray"] = JSON.stringify(holder)
+                    }
+                    else {
+                      holder.push(newGuest);
+                      window.localStorage["guestArray"] = JSON.stringify(holder)
+                    }
+                  }
+                }
+              ]
+            });
+          }
         }
-      },
       ]
     });
   };
@@ -202,37 +247,14 @@ angular.module('starter.controllers', [])
          text: '<b>Assign</b>',
          type: 'button-positive',
          onTap: function(e) {
-           if (!$scope.data.choice) {
-             guestPopup();
-           } else {
-            console.log($scope.data.choice)
-             AssignItem.update({transaction_id: $scope.data.choice, id: orderID})
-             location.reload();
-           }
-         }
+            AssignItem.update({transaction_id: $scope.data.choice, id: orderID})
+            location.reload();
+        }
        },
      ]
    });
   };
 
-  $scope.guestPopup = function(){
-    $scope.data = {}
 
-    var newGuestPopup = $ionicPopup.show({
-      template: '<div class="list"><label class="item item-input item-stacked-label"><span class="input-label">Guest Name</span><input type="text" name="username" placeholder="Guest Name"></label><label class="item item-input item-stacked-label"><span class="input-label">Last Name</span><input type="email" name="email" placeholder="guest@example.com"></label></div>',
-      title: "Create a new Guest User?",
-      scope: $scope,
-      buttons: [
-        { text: 'I do not want',
-          type: 'button-assertive' },
-        { text: '<b>Create Guest</b>',
-          type: 'button-positive',
-          onTap: function(e) {
-            console.log($scope.data)
-          }
-        }
-      ]
-    })
-  }
 
 });
