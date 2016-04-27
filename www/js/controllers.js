@@ -16,18 +16,21 @@ angular.module('starter.controllers', [])
       $scope.$broadcast('scroll.refreshComplete')
     }
 })
-.controller('paidCtrl', function($scope, $stateParams,Transaction) {
-    console.log($stateParams)
+
+.controller('paidCtrl', function($scope, $stateParams, Transaction) {
     $scope.transaction = Transaction.get($stateParams)
+    console.log($scope.transaction)
+    $scope.tip = function(amount, total) {return Math.ceil(parseFloat(amount)/(parseFloat(total))*100-100)}
+    $scope.textPrice = function(price, amount, total){return ((price/100) * (amount/total))}
     $scope.parseFloat = parseFloat
     $scope.parseInt = parseInt
-    console.log($scope.transaction)
+
     $scope.doRefresh = function() {
     $scope.$broadcast('scroll.refreshComplete')
   }
 })
 
-.controller('BillCtrl', function($scope,$location, $stateParams, $ionicPopup, Bill, PayUp, AssignItem, $http) {
+.controller('BillCtrl', function($scope, $location, $stateParams, $ionicPopup, Bill, PayUp, AssignItem, $http) {
   $scope.data = {tip: 18}
   if (Object.keys($stateParams).length != 0 && JSON.stringify($stateParams) != JSON.stringify({})) {
    $scope.bill = Bill.get($stateParams);
@@ -293,6 +296,23 @@ angular.module('starter.controllers', [])
    });
   };
 
-
+  $scope.guestPopup = function() {
+    $scope.data = {}
+    var myPopup = $ionicPopup.show({
+      template: '<label class="item item-input item-stacked-label">Phone Number<span class="input-label"></span><input type="tel" ng-model="data.phone"></label>',
+      title: "Text a Payment Reminder to your Friend",
+      scope: $scope,
+      buttons: [
+        { text: 'Never Mind',
+          type: 'button-assertive' },
+        { text: '<b>Send Text</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            console.log($scope.data.phone)
+          }
+        }
+      ]
+    });
+  };
 
 });

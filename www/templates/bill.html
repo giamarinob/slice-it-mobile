@@ -25,7 +25,7 @@
                 <h3>{{transaction[0]}}</h3><h4>Total Paid: {{transaction[1]/100 | currency}} Total Owed: {{transaction[3]*(1+data.tip/100) | currency}}</h4>
                 <ion-option-button class="button-positive" ng-click="edit(transaction)">Edit</ion-option-button>
                 <ion-option-button class="button-assertive" ng-click="deleteTrans(bill.id, transaction[2])">Delete</ion-option-button>
-                <ion-option-button class="button button-positive" ng-controller="PopupCtrl" ng-click="chargePopup(bill.id,{{(transaction[3] - transaction[1])/100}},transaction[2])" ng-show="{{transaction[4]==currentUserID}}">Settle Your Bill</button>
+                <ion-option-button class="button button-positive" ng-controller="PopupCtrl" ng-click="chargePopup(bill.id,{{(transaction[3] - transaction[1])}},transaction[2])" ng-show="{{transaction[4]==currentUserID}}">Settle Your Bill</button>
             </ion-item>
 
             <ion-list ng-controller="guestList" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">

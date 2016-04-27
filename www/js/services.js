@@ -26,6 +26,7 @@ angular.module('starter.services', [])
 .factory('AddTransaction', function($resource){
   return $resource("http://localhost:3000/bills/:bill_id/transactions",{id: "@id", username: "@username", bill_id: "@bill_id"})
 })
+
 .factory('Transaction', function($resource){
   return $resource("http://localhost:3000/bills/:bill_id/transactions/:id.json",{id: "@id", bill_id: 1})
 })
