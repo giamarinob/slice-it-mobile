@@ -16,9 +16,11 @@ angular.module('starter.controllers', [])
 .controller('BillCtrl', function($scope, $stateParams, Bill, PayUp, AssignItem) {
   $scope.data = {tip: 18}
   $scope.bill = Bill.get($stateParams);
+  $scope.currentUserID = window.localStorage['userID']
   $scope.bills = Bill.query({user_id: window.localStorage['userID']});
-  $scope.payup = function(billID){
-    PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: 5,id:1})
+  $scope.payup = function(billID,amount){
+    console.log(amount)
+    PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: amount,id:1})
     location.reload();
     $scope.assign = function(orderID, transactionID){alert(orderID,transactionID)}
   };
@@ -157,7 +159,29 @@ angular.module('starter.controllers', [])
   location.reload();
   $location.path('/login');
 })
-.controller('PopupCtrl',function($scope, $ionicPopup, AddTransaction, AssignItem) {
+.controller('PopupCtrl',function($scope, $ionicPopup, $filter, AddTransaction, PayUp,AssignItem) {
+
+   $scope.chargePopup = function(billID, amount) {
+   $scope.data = {}
+
+   // An elaborate, custom popup
+   var myPopup = $ionicPopup.show({
+     title: "Confirm Charge of "+$filter('currency')(amount,"$",2),
+     scope: $scope,
+     buttons: [
+       { text: 'Cancel' },
+       {
+         text: 'Confirm Charge',
+         type: 'button-positive',
+         onTap: function(e) {
+             PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: amount, id:1})
+             location.reload();
+         }
+       },
+     ]
+   });
+  };
+
   $scope.showPopup = function(billID) {
    $scope.data = {}
 
