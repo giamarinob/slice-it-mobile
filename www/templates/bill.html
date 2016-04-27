@@ -19,9 +19,8 @@
         <div></div>
         <h5><b>Total: {{((bill.total/100)*(1+data.tip/100))  | currency}} Tip: {{data.tip}}%</b></h5>
 
-        <button class="button button-positive  button-block" ng-click="payup(bill.id)">Settle Your Bill</button>
 
-       <ion-list ng-controller="ListCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
+        <ion-list ng-controller="ListCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
             <ion-item ng-repeat="transaction in bill.transaction_array">
                 <h2>{{transaction[0]}}</h2> Total Paid: {{transaction[1]  | currency}} Total Owed: {{transaction[3]*(1+data.tip/100) | currency}}
                 Total Remaining: {{transaction[3]*(1+data.tip/100) - transaction[1] | currency}}
