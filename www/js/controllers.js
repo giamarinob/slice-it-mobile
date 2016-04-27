@@ -79,25 +79,25 @@ angular.module('starter.controllers', [])
   $scope.listCanSwipe = true;
 })
 
-.controller("guestList", function($scope) {
-  if (window.localStorage["guestArray"]) {
-    var guestArray = JSON.parse(window.localStorage["guestArray"]);
-    $scope.guestArray = guestArray;
-    $scope.deleteGuest = function(guest){
-      var filteredArray = guestArray.filter(function (arrGuest) {
-        return arrGuest.username != guest.username
-      });
-      window.localStorage["guestArray"] = JSON.stringify(filteredArray);
-    };
-  }
+// .controller("guestList", function($scope) {
+//   if (window.localStorage["guestArray"]) {
+//     var guestArray = JSON.parse(window.localStorage["guestArray"]);
+//     $scope.guestArray = guestArray;
+//     $scope.deleteGuest = function(guest){
+//       var filteredArray = guestArray.filter(function (arrGuest) {
+//         return arrGuest.username != guest.username
+//       });
+//       window.localStorage["guestArray"] = JSON.stringify(filteredArray);
+//     };
+//   }
 
-})
+// })
 
-.controller('oneRestCtrl', function($scope, Merchant) {
-  Merchant.get({id: 3}).$promise.then(function(response){
-    $scope.selectedMerchant = response;
-  });
-})
+// .controller('oneRestCtrl', function($scope, Merchant) {
+//   Merchant.get({id: 3}).$promise.then(function(response){
+//     $scope.selectedMerchant = response;
+//   });
+// })
 
 // .controller('checkInCtrl', function($scope, Seating) {
 //   $scope.click = function() {
@@ -237,39 +237,39 @@ angular.module('starter.controllers', [])
             AddTransaction.save({email: $scope.data.email,bill_id: billID})
           }
         },
-        { text: 'Add Guest',
-          type: 'button-full button-balanced',
-          onTap: function(e) {
-            $scope.guestData = {}
-            var newGuestPopup = $ionicPopup.show({
-              template: '<div class="list"><label class="item item-input item-stacked-label"><span class="input-label">Guest Name</span><input type="text" name="username" placeholder="Guest Name" ng-model="guestData.name"></label><label class="item item-input item-stacked-label"><span class="input-label">Email</span><input type="email" name="email" placeholder="guest@example.com" ng-model="guestData.email"></label></div>',
-              title: "Create a new Guest User?",
-              scope: $scope,
-              buttons: [
-                { text: 'I do not want',
-                  type: 'button-assertive' },
-                { text: '<b>Create Guest</b>',
-                  type: 'button-positive',
-                  onTap: function(e) {
-                    var newGuest = new Guest($scope.guestData.name, $scope.guestData.email, billID);
-                    newGuest.findPrimaryId();
-                    var holder = []
-                    if (window.localStorage["guestArray"]) {
-                      holder = JSON.parse(window.localStorage["guestArray"]);
-                      holder.push(newGuest);
-                      window.localStorage["guestArray"] = JSON.stringify(holder)
-                    }
-                    else {
-                      holder.push(newGuest);
-                      window.localStorage["guestArray"] = JSON.stringify(holder)
-                    }
-                    location.reload();
-                  }
-                }
-              ]
-            });
-          }
-        }
+        // { text: 'Add Guest',
+        //   type: 'button-full button-balanced',
+        //   onTap: function(e) {
+        //     $scope.guestData = {}
+        //     var newGuestPopup = $ionicPopup.show({
+        //       template: '<div class="list"><label class="item item-input item-stacked-label"><span class="input-label">Guest Name</span><input type="text" name="username" placeholder="Guest Name" ng-model="guestData.name"></label><label class="item item-input item-stacked-label"><span class="input-label">Email</span><input type="email" name="email" placeholder="guest@example.com" ng-model="guestData.email"></label></div>',
+        //       title: "Create a new Guest User?",
+        //       scope: $scope,
+        //       buttons: [
+        //         { text: 'I do not want',
+        //           type: 'button-assertive' },
+        //         { text: '<b>Create Guest</b>',
+        //           type: 'button-positive',
+        //           onTap: function(e) {
+        //             var newGuest = new Guest($scope.guestData.name, $scope.guestData.email, billID);
+        //             newGuest.findPrimaryId();
+        //             var holder = []
+        //             if (window.localStorage["guestArray"]) {
+        //               holder = JSON.parse(window.localStorage["guestArray"]);
+        //               holder.push(newGuest);
+        //               window.localStorage["guestArray"] = JSON.stringify(holder)
+        //             }
+        //             else {
+        //               holder.push(newGuest);
+        //               window.localStorage["guestArray"] = JSON.stringify(holder)
+        //             }
+        //             location.reload();
+        //           }
+        //         }
+        //       ]
+        //     });
+        //   }
+        // }
       ]
     });
   };
@@ -296,7 +296,7 @@ angular.module('starter.controllers', [])
    });
   };
 
-  $scope.guestPopup = function() {
+  $scope.guestPopup = function(price, amount, total) {
     $scope.data = {}
     var myPopup = $ionicPopup.show({
       template: '<label class="item item-input item-stacked-label">Phone Number<span class="input-label"></span><input type="tel" ng-model="data.phone"></label>',
@@ -308,7 +308,13 @@ angular.module('starter.controllers', [])
         { text: '<b>Send Text</b>',
           type: 'button-positive',
           onTap: function(e) {
-            console.log($scope.data.phone)
+            var phone = $scope.data.phone
+            var textAmount = $scope.textPrice(price, amount, total)
+            $.ajax({
+              method: 'POST',
+              url: 'http://localhost:3000/notify.json',
+              data: {phone: phone, price: textAmount}
+            });
           }
         }
       ]

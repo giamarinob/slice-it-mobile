@@ -8,7 +8,7 @@
             <ion-item class="list card" ng-repeat="item in transaction.items_array">
              {{item.item_description}}
              {{textPrice(item.int_price, transaction.amount, transaction.total) | currency}}
-             <ion-option-button class="button-balanced" ng-click="guestPopup()">Text to Friend</ion-option-button>
+             <ion-option-button class="button-balanced" ng-click="guestPopup(item.int_price,transaction.amount,transaction.total)">Text to Friend</ion-option-button>
 
             </ion-item>
         </ion-list>
