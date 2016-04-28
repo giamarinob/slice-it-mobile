@@ -36,6 +36,7 @@ angular.module('starter.controllers', [])
    $scope.bill = Bill.get($stateParams);
   }
   $scope.currentUserID = window.localStorage['userID']
+  $scope.first_name = window.localStorage['first_name']
   $scope.bills = Bill.query({user_id: window.localStorage['userID']});
   $scope.payup = function(billID,amount){
     PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: amount,id:1})

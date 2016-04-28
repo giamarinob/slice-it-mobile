@@ -4,21 +4,30 @@
             pulling-text="Pull to Refresh your Bill"
             on-refresh="doRefresh(bill.id)">
         </ion-refresher>
-        <h4><b>{{bill.merchant_name}}</b></h4>
-        <h5>Table number {{bill.seating_id}}</h5>
+        <header>
+            <h3>Primary Slicer: {{bill.primary_customer_name}}</h3>
+            <h4><b>{{bill.merchant_name}}</b></h4>
+            <h5>Table number {{bill.seating_id}}</h5>
+        </header>
         <ion-list ng-controller="PopupCtrl">
-            <ion-item class= "list card" ng-repeat="item in bill.item_array">
-              <li class="item" on-tap="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} {{item.price*(1+data.tip/100) | currency}} {{item.assigned_to}}</li>
-            </ion-item>
+            <ul class= "list">
+                <li class="item item-button-right" ng-repeat="item in bill.item_array" on-tap="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} {{item.price*(1+data.tip/100) | currency}} {{item.assigned_to}}
+                <button class="button button-positive">
+                 <i class="icon ion-ios-telephone"></i>
+                 </button>
+                </li>
+            </ul>
         </ion-list>
+        <div class="total">
+            <h4>Total: {{((bill.total/100)*(1+data.tip/100))  | currency}}</h4>
+            <h5>Tip: {{data.tip}}%</h5>
+        </div>
+        <div><p>Adjust tip</p></div>
         <div class="item range">
             <i>$</i>
             <input type="range" name="tip" min="0" max="50" value="data.tip" ng-model = "data.tip">
             <i>$$$</i>
         </div>
-        <div></div>
-        <h5><b>Total: {{((bill.total/100)*(1+data.tip/100))  | currency}} Tip: {{data.tip}}%</b></h5>
-
 
         <ion-list ng-controller="ListCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
             <ion-item ng-repeat="transaction in bill.transaction_array">
