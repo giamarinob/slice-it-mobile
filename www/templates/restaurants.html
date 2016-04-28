@@ -1,9 +1,10 @@
-<ion-view title="Restaurants" id="page2">
+<ion-view title="Nearby Restaurants" id="page2">
     <ion-content ng-controller='restaurantsCtrl' padding="true" class="has-header">
         <ion-refresher
             pulling-text="Pull to Refresh your Check-Ins"
             on-refresh="doRefresh()">
         </ion-refresher>
+
         <ion-list>
             <ion-item class= "list card" ng-repeat="merchant in merchants" ng-click="selectMerchant(merchant)" ng-href="#/app/bills">
               {{merchant.business_name}}

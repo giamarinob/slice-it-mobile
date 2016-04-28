@@ -18,8 +18,9 @@
     </ion-content>
 </ion-view> -->
 
-<ion-view name="login-view">
-  <ion-content>
+<ion-view name="login-view" title="Let's Get Ready to Slice It">
+    <ion-content padding="true">
+    <header class="title"><h2 class="title">Let's Slice It</h2></header>
     <div class="list">
       <label class="item item-input item-floating-label">
         <span class="input-label">Email</span>
@@ -35,7 +36,9 @@
       <button class="button button-block button-calm" ng-click="login()">Login</button>
     </div>
     <div class="padding">
-      <a href="#/register">Not a user? Register</a>
+      <form action="#/register">
+        <button class="button button-block button-balanced">Not a Slicer? Register Here!</button>
+      </form>
     </div>
 
 
