@@ -19,12 +19,12 @@ angular.module('starter.controllers', [])
 })
 
 .controller('paidCtrl', function($scope, $stateParams, Transaction) {
+
     $scope.transaction = Transaction.get($stateParams)
     console.log($scope.transaction)
     $scope.tip = function(amount, total) {return Math.ceil(parseFloat(amount)/(parseFloat(total))*100-100)}
     $scope.textPrice = function(price, amount, total){return ((price/100) * (amount/total))}
     $scope.parseFloat = parseFloat
-    $scope.parseInt = parseInt
 
     $scope.doRefresh = function() {
     $scope.$broadcast('scroll.refreshComplete')
