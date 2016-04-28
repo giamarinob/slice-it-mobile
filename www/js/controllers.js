@@ -206,7 +206,6 @@ angular.module('starter.controllers', [])
 
 .controller('logOutCtrl', function($scope, $location){
   window.localStorage.clear();
-  location.reload();
   $location.path('/login');
 })
 
