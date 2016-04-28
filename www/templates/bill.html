@@ -11,10 +11,9 @@
         </header>
         <ion-list ng-controller="PopupCtrl">
             <ul class= "list">
-                <li class="item item-button-right" ng-repeat="item in bill.item_array" on-tap="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} Base Price + Tax + Tip: <strong>{{item.price*(1+data.tip/100) | currency}}</strong>
-                <button class="button button-positive">
-                 <i><strong>{{item.assigned_to.charAt(0).toUpperCase()}}</strong></i>
-                 </button>
+                <li class="item item-button-right" ng-repeat="item in bill.item_array" on-tap="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}}<br>
+                Base Price + Tax + Tip: <strong>{{item.price*(1+data.tip/100) | currency}}</strong>
+                <button class="button button-positive"><strong>{{item.assigned_to.charAt(0).toUpperCase()}}</strong></button>
                 </li>
             </ul>
         </ion-list>

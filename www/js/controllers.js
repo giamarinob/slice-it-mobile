@@ -174,7 +174,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('newUserCtrl', function($scope, User, $location, $ionicPopup, $http) {
+.controller('newUserCtrl', function($scope, User, $location, $ionicPopup, $http, $ionicLoading) {
+
   $scope.stripeCallback = function(status, response){
     if (response.error) {
       console.log("I errored");
@@ -187,6 +188,7 @@ angular.module('starter.controllers', [])
 
       var new_user = new User({customer: this.data});
       console.log(this.data)
+      $ionicLoading.show();
       new_user.$save( function(data){
         console.log(data);
         window.localStorage['userID'] = data.id;
@@ -194,6 +196,7 @@ angular.module('starter.controllers', [])
         window.localStorage['last_name'] = data.last_name;
         // window.localStorage['userName'] = data.username;
         window.localStorage['userEmail'] = data.email;
+        $ionicLoading.hide();
         $location.path('/app/restaurants');
 
       },function(err){
