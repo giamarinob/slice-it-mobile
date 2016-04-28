@@ -64,8 +64,9 @@ angular.module('starter.controllers', [])
            text: 'Confirm Charge',
            type: 'button-positive',
            onTap: function(e) {
-               PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: parseInt((1+$scope.data.tip/100)*amount*100), id:1});
-               $location.path('app/paid/'+transactionID);
+               PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: parseInt((1+$scope.data.tip/100)*amount*100), id:1}).$promise.then(function(){
+                  $location.path('app/paid/'+transactionID);
+                });
            }
          },
        ]
