@@ -77,6 +77,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
       }
     }
   })
+  .state('app.paid', {
+    url: '/paid/:id',
+    views: {
+    'menuContent': {
+      templateUrl: 'templates/paid.html',
+      controller: 'paidCtrl'
+      }
+    }
+  })
     .state('login', {
     url: '/login',
     templateUrl: 'templates/login.html',
@@ -95,15 +104,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', '
     }
   }
 })
-.state('app.paid', {
-  url: '/paid/:id',
-    views: {
-    'menuContent': {
-      templateUrl: 'templates/paid.html',
-      controller: 'paidCtrl'
-    }
-  }
-})
+
 
   ;
   // if none of the above states are matched, use this as the fallback
