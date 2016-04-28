@@ -94,19 +94,12 @@ angular.module('starter.controllers', [])
 
 // })
 
-// .controller('oneRestCtrl', function($scope, Merchant) {
-//   Merchant.get({id: 3}).$promise.then(function(response){
-//     $scope.selectedMerchant = response;
-//   });
-// })
+.controller('settingsCtrl', function($scope, Customer) {
+   $scope.data = {id: window.localStorage['userID']}
+   $scope.customer = Customer.get({id: window.localStorage['userID']});
+   $scope.update_customer = function(){Customer.update($scope.data)}
 
-// .controller('checkInCtrl', function($scope, Seating) {
-//   $scope.click = function() {
-//     var selected_seating = new Seating({merchant: })
-
-
-//   }
-// })
+ })
 
   // With the new view caching in Ionic, Controllers are only called
 .controller('AppCtrl', function($scope, $ionicModal, $timeout) {
