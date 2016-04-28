@@ -13,8 +13,8 @@
             <ul class= "list">
                 <li class="item item-button-right" ng-repeat="item in bill.item_array" on-tap="transactionsPopup(item.id,item.item_description,bill.transaction_array)">{{item.item_description}} {{item.price*(1+data.tip/100) | currency}} {{item.assigned_to}}
                 <button class="button button-positive">
-                 <i class="icon ion-ios-telephone"></i>
-                 </button>
+                    <i class="icon ion-ios-telephone"></i>
+                </button>
                 </li>
             </ul>
         </ion-list>
