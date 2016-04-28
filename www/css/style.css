@@ -18,14 +18,27 @@ header {
   margin-left: 74%;
  }
 
- .total {
+.total {
   margin: 20px 0;
-  border: solid 2px #000;
+  border: double 10px #fff;
   padding: 5px;
-  background-color: #ccc;
+  background-color: black;
+  border-radius: 10px;
   text-align: center;
 }
 
- .range {
+.total h3, .total h4 {
+  color: white;
+}
 
+ .range {
+  margin-bottom: 10px;
  }
+
+ .login-head {
+  padding-bottom: 20px;
+ }
+
+.restName {
+  width: 45%
+}
