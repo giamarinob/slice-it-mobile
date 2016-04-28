@@ -19,12 +19,12 @@ angular.module('starter.controllers', [])
 })
 
 .controller('paidCtrl', function($scope, $stateParams, Transaction) {
+
     $scope.transaction = Transaction.get($stateParams)
     console.log($scope.transaction)
     $scope.tip = function(amount, total) {return Math.ceil(parseFloat(amount)/(parseFloat(total))*100-100)}
     $scope.textPrice = function(price, amount, total){return ((price/100) * (amount/total))}
     $scope.parseFloat = parseFloat
-    $scope.parseInt = parseInt
 
     $scope.doRefresh = function() {
     $scope.$broadcast('scroll.refreshComplete')
@@ -274,11 +274,11 @@ angular.module('starter.controllers', [])
   };
 
   $scope.transactionsPopup = function(orderID,item_description,transaction_Array) {
-   $scope.data = {transactions: transaction_Array}
+   $scope.data2 = {transactions: transaction_Array}
 
    // An elaborate, custom popup
    var myPopup = $ionicPopup.show({
-     template: '<ion-radio ng-repeat="transaction in data.transactions" ng-model="data.choice" ng-value="transaction[2]">{{transaction[0]}}</ion-radio>',
+     template: '<ion-radio ng-repeat="transaction in data2.transactions" ng-model="data2.choice" ng-value="transaction[2]">{{transaction[0]}}</ion-radio>',
      title: "Assign "+item_description,
      scope: $scope,
      buttons: [
@@ -287,7 +287,7 @@ angular.module('starter.controllers', [])
          text: '<b>Assign</b>',
          type: 'button-positive',
          onTap: function(e) {
-            AssignItem.update({transaction_id: $scope.data.choice, id: orderID})
+            AssignItem.update({transaction_id: $scope.data2.choice, id: orderID})
             location.reload();
         }
        },
