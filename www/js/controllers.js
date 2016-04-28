@@ -39,6 +39,7 @@ angular.module('starter.controllers', [])
   $scope.currentUserID = window.localStorage['userID']
   $scope.first_name = window.localStorage['first_name']
   $scope.bills = Bill.query({user_id: window.localStorage['userID']});
+  $scope.transactionData = {}
   $scope.payup = function(billID,amount){
     PayUp.update({user_id: window.localStorage['userID'], bill_id: billID, amount: amount,id:1})
     location.reload();
@@ -230,8 +231,6 @@ angular.module('starter.controllers', [])
       cssClass: "popup-vertical-buttons",
       scope: $scope,
       buttons: [
-        { text: 'Cancel',
-          type: 'button-full' },
         {
           text: '<b>Add user</b>',
           type: 'button-full button-positive',
@@ -239,6 +238,8 @@ angular.module('starter.controllers', [])
             AddTransaction.save({email: $scope.data.email,bill_id: billID})
           }
         },
+        { text: 'Cancel',
+          type: 'button-full' },
         // { text: 'Add Guest',
         //   type: 'button-full button-balanced',
         //   onTap: function(e) {
@@ -277,11 +278,11 @@ angular.module('starter.controllers', [])
   };
 
   $scope.transactionsPopup = function(orderID,item_description,transaction_Array) {
-   $scope.data = {transactions: transaction_Array}
+   $scope.data2 = {transactions: transaction_Array}
 
    // An elaborate, custom popup
    var myPopup = $ionicPopup.show({
-     template: '<ion-radio ng-repeat="transaction in data.transactions" ng-model="data.choice" ng-value="transaction[2]">{{transaction[0]}}</ion-radio>',
+     template: '<ion-radio ng-repeat="transaction in data2.transactions" ng-model="data2.choice" ng-value="transaction[2]">{{transaction[0]}}</ion-radio>',
      title: "Assign "+item_description,
      scope: $scope,
      buttons: [
@@ -290,7 +291,7 @@ angular.module('starter.controllers', [])
          text: '<b>Assign</b>',
          type: 'button-positive',
          onTap: function(e) {
-            AssignItem.update({transaction_id: $scope.data.choice, id: orderID})
+            AssignItem.update({transaction_id: $scope.data2.choice, id: orderID})
             location.reload();
         }
        },
