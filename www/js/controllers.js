@@ -51,6 +51,10 @@ angular.module('starter.controllers', [])
     $scope.bill = Bill.get($stateParams)
     $scope.$broadcast('scroll.refreshComplete')
   }
+  $scope.allRefresh = function(){
+    $scope.bills = Bill.query({user_id: window.localStorage['userID']});
+    $scope.$broadcast('scroll.refreshComplete')
+  }
   $scope.chargePopup = function(billID, amount,transactionID) {
      $scope.data.amount=amount
 
@@ -207,7 +211,6 @@ angular.module('starter.controllers', [])
 
 .controller('logOutCtrl', function($scope, $location){
   window.localStorage.clear();
-  location.reload();
   $location.path('/login');
 })
 
@@ -307,7 +310,7 @@ angular.module('starter.controllers', [])
             var textAmount = $scope.textPrice(price, amount, total)
             $.ajax({
               method: 'POST',
-              url: 'http://localhost:3000/notify.json',
+              url: 'http://slice-it-app.herokuapp.com/notify.json',
               data: {phone: phone, price: textAmount}
             });
           }

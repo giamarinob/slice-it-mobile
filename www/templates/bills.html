@@ -1,5 +1,9 @@
 <ion-view title="Bills">
     <ion-content padding="true" class="has-header">
+        <ion-refresher
+            pulling-text="Pull to Refresh your Bill"
+            on-refresh="allRefresh()">
+        </ion-refresher>
         <ion-list>
         Open Bills
             <ion-item class= "list card" ng-repeat="bill in bills" ng-show = '!bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
