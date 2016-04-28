@@ -18,8 +18,8 @@
     </ion-content>
 </ion-view> -->
 
-<ion-view name="login-view">
-  <ion-content>
+<ion-view name="login-view" title="Register">
+  <ion-content class="has-header" padding="true">
     <div class="list">
       <form stripe-form="stripeCallback" name="checkoutForm">
       <label class="item item-input item-floating-label">
@@ -42,17 +42,18 @@
 
       <label class="item item-input item-floating-label">
         <span class="input-label">Card Number</span>
-        <input ng-model="number" placeholder="Card Number" payments-format="card" payments-validate="card" name="card" />
+        <input type="tel" ng-model="number" placeholder="Card Number" payments-format="card" payments-validate="card" name="card" />
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">Expiration</span>
-        <input ng-model="expiry" placeholder="Expiration" payments-format="expiry" payments-validate="expiry" name="expiry" />
+        <input type="tel" ng-model="expiry" placeholder="Expiration" payments-format="expiry" payments-validate="expiry" name="expiry" />
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Cvc</span>
-        <input ng-model="cvc" placeholder="CVC" payments-format="cvc" payments-validate="cvc" name="cvc" />
+        <span class="input-label">CVC</span>
+        <input type="tel" ng-model="cvc" placeholder="CVC" payments-format="cvc" payments-validate="cvc" name="cvc" />
       </label>
-      <button class="button button-block button-calm" ng-click="#">Register</button>
+      <button class="button button-block button-calm" >Register</button>
+      <!-- NG CLICK IS unbound on purpose -->
   </form>
 </div>
 
