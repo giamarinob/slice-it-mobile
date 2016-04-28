@@ -306,7 +306,7 @@ angular.module('starter.controllers', [])
             var textAmount = $scope.textPrice(price, amount, total)
             $.ajax({
               method: 'POST',
-              url: 'http://localhost:3000/notify.json',
+              url: 'http://slice-it-app.herokuapp.com/notify.json',
               data: {phone: phone, price: textAmount}
             });
           }

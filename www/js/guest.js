@@ -14,7 +14,7 @@ Guest.prototype.findPrimaryId = function(){
   console.log(this.id);
   $.ajax({
     data: this.id,
-    url: 'http://localhost:3000/bills/' + this.id + ".json",
+    url: 'http://slice-it-app.herokuapp.com/bills/' + this.id + ".json",
     method: "GET",
     dataType: "json"
   }).done(function(response){
