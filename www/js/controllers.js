@@ -10,6 +10,7 @@ angular.module('starter.controllers', [])
     $scope.hello = function(merchant){return merchant.checked_in.includes($scope.id)}
     $scope.selectMerchant = function(merchant) {
       Seating.save({merchant_id: merchant.id, customer_id: window.localStorage['userID']});
+      location.reload()
     }
     $scope.doRefresh = function() {
       $scope.merchants = Merchant.query()
