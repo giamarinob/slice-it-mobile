@@ -2,7 +2,7 @@
     <ion-content padding="true" class="has-header">
         <ion-refresher
             pulling-text="Pull to Refresh your Bill"
-            on-refresh="doRefresh(bill.id)">
+            on-refresh="allRefresh()">
         </ion-refresher>
         <ion-list>
             <ion-item class= "list card" ng-repeat="bill in bills" ng-href="#/app/bills/{{bill.id}}">

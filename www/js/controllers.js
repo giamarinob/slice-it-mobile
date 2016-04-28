@@ -50,6 +50,10 @@ angular.module('starter.controllers', [])
     $scope.bill = Bill.get($stateParams)
     $scope.$broadcast('scroll.refreshComplete')
   }
+  $scope.allRefresh = function(){
+    $scope.bills = Bill.query({user_id: window.localStorage['userID']});
+    $scope.$broadcast('scroll.refreshComplete')
+  }
   $scope.chargePopup = function(billID, amount,transactionID) {
      $scope.data.amount=amount
 
