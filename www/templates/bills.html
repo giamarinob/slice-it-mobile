@@ -1,9 +1,17 @@
 <ion-view title="Bills">
     <ion-content padding="true" class="has-header">
         <ion-list>
-            <ion-item class= "list card" ng-repeat="bill in bills" ng-href="#/app/bills/{{bill.id}}">
+        Open Bills
+            <ion-item class= "list card" ng-repeat="bill in bills" ng-show = '!bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
               <p>{{bill.merchant_name}}</p>
               ${{bill.total/100}}
+            </ion-item>
+        </ion-list>
+        <ion-list>
+        Bill History
+            <ion-item class= "list card" ng-repeat="bill in bills" ng-show = 'bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
+              <p>{{bill.merchant_name}}</p>
+              {{bill.created_at | date : 'short'}}
             </ion-item>
         </ion-list>
     </ion-content>
