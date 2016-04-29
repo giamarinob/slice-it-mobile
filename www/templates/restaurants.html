@@ -1,27 +1,30 @@
-<ion-view title="Nearby Restaurants" id="page2">
-    <ion-content ng-controller='restaurantsCtrl' padding="true" class="has-header">
+<ion-view title="Welcome!">
+    <ion-content ng-controller='restaurantsCtrl' padding="true" class="has-header mapground">
         <ion-refresher
             pulling-text="Pull to Refresh your Check-Ins"
             on-refresh="doRefresh()">
         </ion-refresher>
-
         <ion-list>
-            <ion-item class="list item-icon-left" ng-repeat="merchant in merchants" ng-click="selectMerchant(merchant)" ng-href="#/app/bills">
+          <ion-item class="list item-dark item-icon-left" ng-click="selectMerchant(merchant)" ng-href="#/app/bills">
+            <div class = "item-text-wrap "><b>You've eaten pizza every day this week! Wow!</b></div>
+            <i class="icon ion-pizza"></i>
+          </ion-item>
+          <ion-item class="item-dark less-padding"> <h2><b>Restaurants near {{first_name}}</b></h2> </ion-item>
+          <ion-item class="item gray">
+
+            <ion-item class="list item-dark item-icon-left less-margin" ng-repeat="merchant in merchants" ng-click="selectMerchant(merchant)" ng-href="#/app/bills">
               <!-- <i class="icon ion-fork"></i> -->
-
-
-              <div>
-                {{merchant.business_name}}
-              </div>
+              <div>{{merchant.business_name}}</div>
               <div ng-show="hello(merchant)">
                 <i class="icon ion-android-checkmark-circle"></i>
-                You are checked in!
+                <b>You are checked in!</b>
               </div>
               <div ng-show="!hello(merchant)">
                 <i class="icon ion-fork"></i>
-                Check into this restaurant!
+                <b>Check into this restaurant!</b>
               </div>
             </ion-item>
+          </ion-item>
         </ion-list>
     </ion-content>
 </ion-view>
