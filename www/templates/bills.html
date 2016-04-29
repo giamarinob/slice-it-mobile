@@ -6,7 +6,7 @@
         </ion-refresher>
         <ion-list>
         <h3>Open Bills</h3>
-            <ion-item class= "list card item-icon-right item-icon-left" ng-repeat="bill in bills" ng-show = '!bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
+            <ion-item class= "list card item-icon-right item-icon-left" ng-repeat="bill in bills" ng-show = '!bill["paid"]'ng-href="#/app/bills/{{bill.id}}">
               <h2>{{bill.merchant_name}}</h2>
               <i class="icon ion-android-restaurant"></i>
               <i class="icon grey">{{bill.total/100 | currency}}</i>
@@ -14,7 +14,7 @@
         </ion-list>
         <ion-list>
         <h3>Bill History</h3>
-            <ion-item class= "list card item-icon-right item-icon-left" ng-repeat="bill in bills" ng-show = 'bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
+            <ion-item class= "list card item-icon-right item-icon-left" ng-repeat="bill in bills" ng-show = 'bill["paid"]'ng-href="#/app/bills/{{bill.id}}">
               <h2>{{bill.merchant_name}}</h2>
               <i class="icon ion-ios-time-outline"></i>
               <i class="icon grey">{{bill.created_at | date : 'shortTime'}}</i>

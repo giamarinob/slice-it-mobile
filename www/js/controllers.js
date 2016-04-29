@@ -36,6 +36,7 @@ angular.module('starter.controllers', [])
   $scope.data = {tip: 18}
   if (Object.keys($stateParams).length != 0 && JSON.stringify($stateParams) != JSON.stringify({})) {
    $scope.bill = Bill.get($stateParams);
+   console.log($scope.bill)
   }
   $scope.currentUserID = window.localStorage['userID']
   $scope.first_name = window.localStorage['first_name']

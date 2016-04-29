@@ -5,13 +5,14 @@
             on-refresh="doRefresh(bill.id)">
         </ion-refresher>
         <header>
+            {{bill.paid}}
             <h3>Primary Slicer: {{bill.primary_customer_name}}</h3>
             <h4><b>{{bill.merchant_name}}</b></h4>
             <h5>Table number {{bill.seating_id}}</h5>
         </header>
         <ion-list ng-controller="PopupCtrl">
             <ul class= "list">
-                <li class="item item-button-right" ng-repeat="item in bill.item_array" on-tap="{{bill.paid=true}}||transactionsPopup(item.id,item.item_description,bill.transaction_array)">
+                <li class="item item-button-right" ng-repeat="item in bill.item_array" on-tap="{{bill.paid}}||transactionsPopup(item.id,item.item_description,bill.transaction_array)">
                 <button class="button button-positive"><strong>{{item.assigned_to.charAt(0).toUpperCase()}}</strong></button>
                 {{item.item_description}}<br>
                 Base Price + Tax + Tip: <strong>{{item.price*(1+data.tip/100) | currency}}</strong>
@@ -22,7 +23,7 @@
             <h3>Total: {{((bill.total/100)*(1+data.tip/100))  | currency}}</h3>
             <h4>Tip: {{data.tip}}%</h4>
         </div>
-        <div ng-hide="{{bill.paid=true}}">
+        <div ng-show="!bill.paid">
             <p>Adjust Tip:</p>
             <div class="item range">
             <i>$</i>
@@ -37,11 +38,11 @@
                 <h4 ng-show="{{transaction[4]==currentUserID}}">Swipe to Settle Your Bill!</h4>
                 <i class="icon ion-ios-arrow-right"></i>
                 <ion-option-button class="button-positive" ng-click="edit(transaction)">Edit</ion-option-button>
-                <ion-option-button class="button-assertive" ng-click="deleteTrans(bill.id, transaction[2])" ng-show="{{transaction[4]!=currentUserID}}" ng-hide="{{bill.paid}}">Delete</ion-option-button>
-                <ion-option-button class="button button-balanced" ng-controller="PopupCtrl" ng-click="chargePopup(bill.id,{{(transaction[3] - transaction[1])}},transaction[2])" ng-show="{{transaction[4]==currentUserID}}" ng-hide="{{bill.paid=true}}">Settle Your Bill</button>
+                <ion-option-button class="button-assertive" ng-click="deleteTrans(bill.id, transaction[2])" ng-show="{{transaction[4]!=currentUserID}}">Delete</ion-option-button>
+                <ion-option-button class="button button-balanced" ng-controller="PopupCtrl" ng-click="chargePopup(bill.id,{{(transaction[3] - transaction[1])}},transaction[2])" ng-show="!bill.paid"ng-show="(transaction[4]==currentUserID)">Settle Your Bill</button>
             </ion-item>
 
         </ion-list>
-        <button class="button button-positive  button-block" ng-controller="PopupCtrl" ng-click="showPopup(bill.id)" ng-hide="{{bill.paid=true}}">Add another friend to the bill</button>
+        <button class="button button-positive  button-block" ng-controller="PopupCtrl" ng-click="showPopup(bill.id)" ng-show="!bill.paid">Add another friend to the bill</button>
     </ion-content>
 </ion-view>
