@@ -1,4 +1,4 @@
-<ion-view name="login-view">
+<ion-view title="Settings">
   <ion-content>
     <div class="list">
       <form stripe-form="stripeCallback" name="checkoutForm">
@@ -24,17 +24,18 @@
 </div>
 
     <div class="padding">
-      <label class="item item-input item-label">
+      <label class="item item-input item-button-right item-label">
         <span class="input-label">Primary Card</span> XXXX-4242
-
-
+        <button class="button button-assertive center">Delete</button>
       </label>
-      <button class="button button-assertive center">Delete</button>
 
-      <label class="item item-input item-label">
+
+      <label class="item item-input item-button-right item-label">
         <span class="input-label">Add Credit Card</span>
         <input type="text" placeholder="" ng-model="data.credit_card">
+        <button class="button button-positive center">Add</button>
       </label>
-      <button class="button button-positive center">Add</button>
+
     </div>
   </ion-content>
+</ion view>

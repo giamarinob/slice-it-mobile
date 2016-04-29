@@ -27,6 +27,11 @@ header {
   text-align: center;
 }
 
+.less-padding h2 {
+font-size: 1.62em;
+color: white;
+}
+
 .total h3, .total h4 {
   color: white;
 }
@@ -39,6 +44,39 @@ header {
   padding-bottom: 20px;
  }
 
+ .gray {
+  background: transparent;
+ }
+
+ .grey {
+  color: gray;
+ }
+
+ .less-padding{
+  padding: .4em;
+  border-radius: 4px;
+ }
+
+ .icon h4{
+
+ }
+
+.less-margin{
+  padding: 0;
+  margin-top: 0em;
+  margin-bottom: .4em;
+  margin-left: -1em;
+  margin-right: 1.2em;
+  border-radius: 4px;
+}
+
 .restName {
   width: 45%
+}
+
+* {
+  font-family: arial
+}
+.mapground{
+  background-image: url("http://i.imgur.com/x9lFd7z.png")
 }

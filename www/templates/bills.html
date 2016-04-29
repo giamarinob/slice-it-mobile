@@ -5,17 +5,20 @@
             on-refresh="allRefresh()">
         </ion-refresher>
         <ion-list>
-        Open Bills
-            <ion-item class= "list card" ng-repeat="bill in bills" ng-show = '!bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
-              <p>{{bill.merchant_name}}</p>
-              ${{bill.total/100}}
+        <h3>Open Bills</h3>
+            <ion-item class= "list card item-icon-right item-icon-left" ng-repeat="bill in bills" ng-show = '!bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
+              <h2>{{bill.merchant_name}}</h2>
+              <i class="icon ion-android-restaurant"></i>
+              <i class="icon grey">{{bill.total/100 | currency}}</i>
             </ion-item>
         </ion-list>
         <ion-list>
-        Bill History
-            <ion-item class= "list card" ng-repeat="bill in bills" ng-show = 'bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
-              <p>{{bill.merchant_name}}</p>
-              {{bill.created_at | date : 'short'}}
+        <h3>Bill History</h3>
+            <ion-item class= "list card item-icon-right item-icon-left" ng-repeat="bill in bills" ng-show = 'bill["paid?"]'ng-href="#/app/bills/{{bill.id}}">
+              <h2>{{bill.merchant_name}}</h2>
+              <i class="icon ion-ios-time-outline"></i>
+              <i class="icon grey">{{bill.created_at | date : 'shortTime'}}</i>
+
             </ion-item>
         </ion-list>
     </ion-content>
