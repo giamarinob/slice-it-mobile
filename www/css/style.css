@@ -7,8 +7,28 @@
   background-image: url("http://i.imgur.com/x9lFd7z.png")
 }
 
+.bg {
+  background-image: url("/img/bwrest.JPG");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 header {
   text-align: center;
+  color: #fff;
+}
+
+.title {
+  color: #000;
+  font-weight: bold;
+}
+
+.list {
+  background-color: rgba(255,255,255,0.8)
+}
+
+.padding {
+  background-color: rgba(255,255,255,0.5);
 }
 
 .popup-vertical-buttons button
@@ -28,10 +48,11 @@ header {
 
 .total {
   margin: 20px 0;
-  border: double 10px #fff;
+  color: #000;
+  border: double 10px #ccc;
   padding: 5px;
-  background-color: black;
-  border-radius: 10px;
+  background-color: rgba(255,255,255,0.6);
+  border-radius: 20px;
   text-align: center;
 }
 
@@ -41,12 +62,26 @@ color: white;
 }
 
 .total h3, .total h4 {
-  color: white;
+  color: black;
 }
 
- .range {
+.range {
   margin-bottom: 10px;
- }
+  background-color: rgba(255,255,255,0.8);
+  color: #000;
+}
+
+a .item-content {
+  background-color: #00A6FF;
+}
+
+.translist h1 {
+  font-size: 24px;
+}
+
+.item h3 {
+  font-size: 12px;
+}
 
  .login-head {
   padding-bottom: 20px;
@@ -81,6 +116,7 @@ color: white;
 .restName {
   width: 45%
 }
+
 
 
 

@@ -1,11 +1,10 @@
 <ion-view title="Bill">
-    <ion-content padding="true" ng-controller="BillCtrl" class="has-header">
+    <ion-content padding="true" ng-controller="BillCtrl" class="has-header bg">
         <ion-refresher
             pulling-text="Pull to Refresh your Bill"
             on-refresh="doRefresh(bill.id)">
         </ion-refresher>
         <header>
-            {{bill.paid}}
             <h3>Primary Slicer: {{bill.primary_customer_name}}</h3>
             <h4><b>{{bill.merchant_name}}</b></h4>
             <h5>Table number {{bill.seating_id}}</h5>
@@ -33,9 +32,10 @@
         </div>
         <ion-list ng-controller="ListCtrl" show-delete="shouldShowDelete" show-reorder="shouldShowReorder" can-swipe="listCanSwipe">
 
-            <ion-item ng-repeat="transaction in bill.transaction_array" class="item item-icon-right item-remove-animate">
-                <h3>{{transaction[0]}}</h3><h4>Total Paid: {{transaction[1]/100 | currency}} Total Owed: {{(transaction[3]*(1+data.tip/100))-(transaction[1]/100) | currency}}</h4>
-                <h4 ng-show="{{transaction[4]==currentUserID}}">Swipe to Settle Your Bill!</h4>
+            <ion-item ng-repeat="transaction in bill.transaction_array" class="item item-icon-right item-remove-animate translist">
+                <h1>{{transaction[0]}}</h1><h3>Total Paid: {{transaction[1]/100 | currency}}</h3>
+                <h3>Total Owed: {{(transaction[3]*(1+data.tip/100))-(transaction[1]/100) | currency}}</h3>
+                <h3 ng-show="{{transaction[4]==currentUserID}}">Swipe to Settle Your Bill!</h3>
                 <i class="icon ion-ios-arrow-right"></i>
                 <ion-option-button class="button-positive" ng-click="edit(transaction)">Edit</ion-option-button>
                 <ion-option-button class="button-assertive" ng-click="deleteTrans(bill.id, transaction[2])" ng-show="{{transaction[4]!=currentUserID}}">Delete</ion-option-button>
